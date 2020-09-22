@@ -19,7 +19,7 @@ class home extends Component {
   }
   render() {
     let recentScreamsMarkup = this.state.screams ? (
-    this.state.screams.map(scream => <Scream scream={scream}/>)) : <p>Loading...</p>
+    this.state.screams.map(scream => <Scream key={scream.screamId} scream={scream}/>)) : <p>Loading...</p>
     return (
       <Grid container spacing={2}>
         <Grid item sm={8} xs={12}>
