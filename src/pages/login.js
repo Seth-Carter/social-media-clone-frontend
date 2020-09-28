@@ -13,36 +13,9 @@ import { connect } from 'react-redux'
 import { loginUser } from '../redux/actions/userActions'
 import userReducer from '../redux/reducers/userReducer'
 
-const styles = {
-  form: {
-    textAlign: 'center',
-    '& h1': {
-      fontSize: '2.5rem'
-    }
-  },
-  image: {
-    width: '100%',
-    maxWidth: 60,
-  },
-  pageTitle: {
-    margin: '10px auto 10px auto'
-  },
-  textField: {
-    margin: '10px auto 10px auto'
-  },
-  button: {
-    margin: '20px auto 10px auto',
-    position: 'relative'
-  },
-  customError: {
-    color: 'red',
-    fontSize: '0.8rem',
-    marginTop: 10
-  },
-  progress: {
-    position: 'absolute'
-  }
-}
+const styles = (theme) => ({
+  ...theme.spreadThis
+})
 
 class login extends Component {
   constructor() {
@@ -54,6 +27,12 @@ class login extends Component {
     }
   }
   
+  componentWillReceiveProps(nextProps){
+    if(nextProps.UI.errors){
+    this.setState({ errors: nextProps.UI.errors})
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
     const userData = {
