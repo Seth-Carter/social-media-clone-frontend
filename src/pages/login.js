@@ -14,7 +14,7 @@ import { loginUser } from '../redux/actions/userActions'
 import userReducer from '../redux/reducers/userReducer'
 
 const styles = (theme) => ({
-  ...theme.spreadThis
+  ...theme.spreadThis 
 })
 
 class login extends Component {
@@ -56,7 +56,7 @@ class login extends Component {
         <Grid item sm />
         <Grid item sm>
           <img className={classes.image} src={AppIcon} alt="App logo" />
-          <Typography variant="h2" component="h1">
+          <Typography variant="h2" component="h1" className={classes.heading}>
             Login
           </Typography>
           <form noValidate onSubmit={this.handleSubmit}>
