@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import PropTypes from 'prop-types'
 import MyButton from '../utils/MyButton'
+import DeleteScream from './DeleteScream'
 
 // Material UI Imports
 import { withStyles } from '@material-ui/core/styles'
@@ -14,6 +15,8 @@ import { Typography } from '@material-ui/core'
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 
 // Redux imports
 import { connect } from 'react-redux'
@@ -21,6 +24,7 @@ import { likeScream, unLikeScream } from '../redux/actions/dataActions'
 
 const styles = {
   card: {
+    position: 'relative',
     display: 'flex',
     marginBottom: 20
   },
@@ -41,15 +45,58 @@ class Scream extends Component {
   }
 
   likeScream = () => {
+    console.log('Liked!')
+    console.log(this.props.scream.screamId)
     this.props.likeScream(this.props.scream.screamId)
   }
  
   unLikeScream = () => {
+    console.log('Unliked!')
+    console.log(this.props.scream.screamId)
     this.props.unLikeScream(this.props.scream.screamId)
   }
   render(){
     dayjs.extend(relativeTime)
-    const { classes, scream : { body, createdAt, userImage, userHandle, likeCount, commentCount } } = this.props
+    
+    const {
+      classes,
+      scream: {
+        body,
+        createdAt,
+        userImage,
+        userHandle,
+        screamId,
+        likeCount,
+        commentCount
+      },
+      user: {
+        authenticated,
+        credentials: { handle }
+      }
+    } = this.props
+
+  const likeButton = !authenticated ? (
+    <MyButton tip="Like">
+      <Link to="/login">
+        <FavoriteBorderIcon color="primary"/>
+      </Link>
+    </MyButton>
+  ) : (
+    this.likedScream() ? (
+      <MyButton tip="Undo like" onClick={this.unLikeScream}>
+        <FavoriteIcon color="primary" />
+      </MyButton>
+    ) : (
+      <MyButton tip="Like" onClick={this.likeScream}>
+        <FavoriteBorderIcon color="primary" />
+      </MyButton>
+    )
+  )
+
+  const deleteButton = authenticated && userHandle === handle ? (
+    <DeleteScream screamId={screamId}/>
+  ) : null
+
 
     return (
       <Card className={classes.card}>
@@ -59,6 +106,7 @@ class Scream extends Component {
           title="Profile image" />
         <CardContent className={classes.content}>
           <Typography color="primary" component={Link} to={`/users/${userHandle}`}variant="h5">{userHandle}</Typography>
+          {deleteButton}
           <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
           <Typography variant="body1">{body}</Typography>
           {likeButton}
