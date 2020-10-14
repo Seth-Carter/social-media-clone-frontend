@@ -5,6 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import PropTypes from 'prop-types'
 import MyButton from '../utils/MyButton'
 import DeleteScream from './DeleteScream'
+import ScreamDialog from './ScreamDialog'
 
 // Material UI Imports
 import { withStyles } from '@material-ui/core/styles'
@@ -93,6 +94,7 @@ class Scream extends Component {
     )
   )
 
+
   const deleteButton = authenticated && userHandle === handle ? (
     <DeleteScream screamId={screamId}/>
   ) : null
@@ -114,6 +116,8 @@ class Scream extends Component {
           <MyButton tip="Comments">
             <ChatIcon color="primary" />
           </MyButton>
+          <span>{commentCount} comments</span>
+          <ScreamDialog screamId={screamId} usserHandle={userHandle}></ScreamDialog>
         </CardContent>
       </Card>
     )
