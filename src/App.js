@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode'
 import themeSettings from './utils/theme'
 
 //Component imports
-import Navbar from './components/Navbar'
+import Navbar from './components/layout/Navbar'
 import AuthRoute from './utils/AuthRoute'
 
 //Page imports

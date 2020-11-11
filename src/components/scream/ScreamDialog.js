@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { getScream } from '../redux/actions/dataActions'
-import MyButton from '../utils/MyButton'
+import { getScream } from '../../redux/actions/dataActions'
+import MyButton from '../../utils/MyButton'
+import LikeButton from './LikeButton'
 
 import { withStyles } from '@material-ui/core/styles'
 import { Button, TextField, IconButton, Tooltip, Dialog, DialogTitle, DialogContent, CircularProgress } from '@material-ui/core'
@@ -13,6 +14,7 @@ import { Typography } from '@material-ui/core'
 
 import CloseIcon from '@material-ui/icons/Close' 
 import UnfoldMore from '@material-ui/icons/UnfoldMore' 
+import ChatIcon from '@material-ui/icons/Chat'
 
 import dayjs from 'dayjs'
 
@@ -21,6 +23,28 @@ const styles = theme => ({
   invisibleSeparator: {
     border: 'none',
     margin: 4
+  },
+  profileImage: {
+    maxWidth: 200,
+    height: 200,
+    borderRadius: '50%',
+    objectFit: 'cover'
+  },
+  dialogContent: {
+    padding: 20
+  },
+  closeButton: {
+    position: 'absolute',
+    left: '90%'
+  },
+  expandButton: {
+    position: 'absolute',
+    left: '90%'
+  },
+  spinnerDiv: {
+    textAlign: 'center',
+    marginTop: 50,
+    marginBottom: 50
   }
 })
 
@@ -53,7 +77,12 @@ class ScreamDialog extends Component {
           
 
     const dialogMarkup = loading ? (
-      <CircularProgress size={200}/>
+      <div className={classes.spinnerDiv} >
+        <CircularProgress 
+          size={200} 
+          thickness={2}
+          />
+      </div>
     ) : (
       <Grid container spacing={16}>
         <Grid item sm={5}>
@@ -76,6 +105,12 @@ class ScreamDialog extends Component {
           <Typography variant="body1">
             {body}
           </Typography>
+          <LikeButton screamId={screamId} />
+          <span>{likeCount} likes</span>
+          <MyButton tip="Comments">
+            <ChatIcon color="primary" />
+          </MyButton>
+          <span>{commentCount} comments</span>
         </Grid>
       </Grid>
     )
@@ -88,7 +123,7 @@ class ScreamDialog extends Component {
             <MyButton tip="Close" onClick={this.handleClose} tipClassName={classes.closeButton}>
               <CloseIcon />
             </MyButton>      
-            <DialogContent className={classes.DialogContent}>
+            <DialogContent className={classes.dialogContent}>
               {dialogMarkup}
             </DialogContent>      
           </Dialog>

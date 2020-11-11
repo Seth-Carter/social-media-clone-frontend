@@ -18,8 +18,8 @@ import KeyboardReturn from '@material-ui/icons/KeyboardReturn'
 
 // Redux imports
 import { connect } from 'react-redux'
-import { logoutUser, uploadImage } from '../redux/actions/userActions'
-import MyButton from '../utils/MyButton'
+import { logoutUser, uploadImage } from '../../redux/actions/userActions'
+import MyButton from '../../utils/MyButton'
 
 const styles = (theme) => ({
   ...theme.spreadThis 

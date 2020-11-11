@@ -1,4 +1,4 @@
-import { SET_SCREAMS, SET_SCREAM, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM, LOADING_UI, STOP_LOADING_UI, POST_SCREAM, SET_ERRORS, CLEAR_ERRORS } from '../types'
+import { SUBMIT_COMMENT, SET_SCREAMS, SET_SCREAM, LOADING_DATA, LIKE_SCREAM, UNLIKE_SCREAM, DELETE_SCREAM, LOADING_UI, STOP_LOADING_UI, POST_SCREAM, SET_ERRORS, CLEAR_ERRORS } from '../types'
 import axios from 'axios'
 import { createDispatchHook } from 'react-redux'
 
@@ -45,7 +45,7 @@ export const postScream = (newScream) => (dispatch) => {
         type: POST_SCREAM,
         payload: res.data
       })
-      dispatch({ type: CLEAR_ERRORS})
+      dispatch(clearErrors())
     })
     .catch(err => {
       dispatch({
@@ -74,6 +74,23 @@ export const unLikeScream = (screamId) => dispatch => {
       })
     })
     .catch(err => console.log(err))
+}
+
+export const submitComment = (screamId, commentData) => (dispatch) => {
+  axios.post(`/scream/${screamId}/comment`, commentData)
+    .then(res => {
+      dispatch({
+        type: SUBMIT_COMMENT,
+        payload: res.data
+      })
+      dispatch(clearErrors())
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      })
+    })
 }
 
 export const deleteScream = (screamId) => (dispatch) => {

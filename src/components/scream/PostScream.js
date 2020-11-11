@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
 import { connect } from 'react-redux'
-import { postScream, clearErrors } from '../redux/actions/dataActions'
-import MyButton from '../utils/MyButton'
+import { postScream, clearErrors } from '../../redux/actions/dataActions'
+import MyButton from '../../utils/MyButton'
 
 // MUI imports
 import { Button, TextField, IconButton, Tooltip, Dialog, DialogTitle, DialogContent, CircularProgress } from '@material-ui/core'
